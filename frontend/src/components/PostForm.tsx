@@ -1,40 +1,50 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { PostService } from '../services';
 
 export const PostForm = () => {
-  const [title, setTitle] = useState('');
-  const [body, setBody] = useState('');
+  const navigation = useNavigate();
+
+  const [name, setName] = useState('');
+  const [description, setDescription] = useState('');
   const { createPost } = PostService()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    if ([name, description].includes("")) {
+      console.error("Todos los datos son obligaorios")
+      return;
+    }
+
     try {
-        await createPost(title, body);
-        setTitle('');
-        setBody('');
-      } catch (error) {
-        console.error(error.message);
-      }
+      await createPost(name, description);
+      setName('');
+      setDescription('');
+
+      navigation('/')
+    } catch (error: any) {
+      console.error(error.message);
+    }
   };
 
   return (
-    <div>
+    <div className='container'>
       <h2>Crear Nueva Publicación</h2>
       <form onSubmit={handleSubmit}>
         <div>
           <label>Título:</label>
           <input
             type="text"
-            value={title}
-            onChange={e => setTitle(e.target.value)}
+            value={name}
+            onChange={e => setName(e.target.value)}
           />
         </div>
         <div>
-          <label>Cuerpo:</label>
+          <label>Descripción:</label>
           <textarea
-            value={body}
-            onChange={e => setBody(e.target.value)}
+            value={description}
+            onChange={e => setDescription(e.target.value)}
           />
         </div>
         <button type="submit">Crear Publicación</button>

@@ -1,13 +1,16 @@
 {
-    "name": "post-manager",
-    "private": true,
-    "scripts": {
-      "start:frontend": "cd frontend && npm run start",
-      "start:backend": "cd backend && rails server",
-      "start": "npm run start:frontend & npm run start:backend"
-    },  
-    "workspaces": [
-      "frontend",
-      "backend"
-    ]
+  "name": "post-manager",
+  "private": true,
+  "scripts": {
+    "start:frontend": "cd frontend && npm run start",
+    "start:backend": "cd backend && rails server",
+    "start": "concurrently \"npm run start:backend\" \"npm run start:frontend\""
+  },
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
+  "devDependencies": {
+    "concurrently": "^8.2.1"
   }
+}

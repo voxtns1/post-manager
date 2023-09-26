@@ -3,14 +3,15 @@ class PostsController < ApplicationController
   
     # GET /posts
     def index
-      if params[:name]
-        @posts = Post.where("name LIKE ?", "%#{params[:name]}%")
+      if params[:search]
+        search_term = params[:search].downcase
+        @posts = Post.where("LOWER(name) LIKE :search OR LOWER(description) LIKE :search", search: "%#{search_term}%")
       else
         @posts = Post.all
       end
     
       render json: @posts
-    end
+    end    
   
     # GET /posts/1
     def show
