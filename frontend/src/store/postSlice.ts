@@ -47,8 +47,12 @@ const postSlice = createSlice({
 });
 
 export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
-    const response = await PostService().getPosts();
-    return response;
+    try{
+        const response = await PostService().getPosts();
+        return response;    
+    } catch (error) {
+        throw new Error('Error al cargar los posts');
+    }
 });
 
 export const addPost = createAsyncThunk<IPost, Pick<IPost, 'name' | 'description'>>('posts/addPost', async (newPost) => {
