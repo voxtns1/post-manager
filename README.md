@@ -1,17 +1,39 @@
-# Frontend del Proyecto de Gestión de Publicaciones
+# Post Manager
 
-Este es el frontend de la aplicación de gestión de publicaciones. Proporciona una interfaz de usuario para interactuar con la API del backend y realizar operaciones CRUD en las publicaciones.
+Este proyecto consta de una aplicación web para gestionar publicaciones (posts). Incluye un backend construido con Ruby on Rails y un frontend construido con React.
 
-## Requisitos Previos
+## Requisitos previos
 
-Antes de comenzar, asegúrate de tener instalado [Node.js](https://nodejs.org/) en tu sistema. Puedes verificar la instalación ejecutando los siguientes comandos en tu terminal:
+Asegúrate de tener las siguientes herramientas instaladas antes de comenzar:
 
-```sh
-node -v
-npm -v
+- [Node.js](https://nodejs.org/) - Se recomienda la versión LTS.
+- [Ruby](https://www.ruby-lang.org/) - Se recomienda la versión 2.6.6 o superior.
+- [Rails](https://rubyonrails.org/) - Se recomienda la versión 6.0.4 o superior.
+- [Concurrently](https://www.npmjs.com/package/concurrently) - Instálalo globalmente con `npm install -g concurrently`.
+
+## Instrucciones de configuración
+
+Sigue estos pasos para configurar y ejecutar el proyecto:
+
+### Configuración del Proyecto Backend
+1. Ve al directorio del backend:
+
+```shell
+cd backend
 ```
 
-## Configuración del Proyecto
+2. Instala las dependencias:
+```shell
+bundle install
+```
+
+3. Configura la base de datos:
+```shell
+rails db:create
+rails db:migrate
+```
+
+### Configuración del Proyecto FrontEnd
 1. Clona este repositorio en tu máquina local:
 ```sh
 git clone https://post-manager.git
@@ -40,17 +62,6 @@ Esto iniciará el servidor de desarrollo de React el servidor en Ruby. Abrirá l
 * La aplicación te permitirá ver una lista de publicaciones existentes.
 * Puedes agregar nuevas publicaciones haciendo clic en el botón "Agregar Publicación".
 * También puedes eliminar o editar publicaciones existentes.
-
-## Contribuciones
-Si deseas contribuir a este proyecto, por favor sigue los siguientes pasos:
-
-1. Haz un fork del repositorio en GitHub.
-2. Clona tu fork en tu máquina local.
-3. Crea una nueva rama para tu contribución: git checkout -b mi-contribucion
-4. Realiza tus cambios y asegúrate de que todo funcione correctamente.
-5. Haz commit de tus cambios: git commit -m "Agrega mi contribución"
-6. Sube tus cambios a tu fork en GitHub: git push origin mi-contribucion
-7. Crea un Pull Request en el repositorio original.
 
 ## Autor
 Julio Jorquera (voxtns) - Desarrollador FullStack.
