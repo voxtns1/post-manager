@@ -13,6 +13,11 @@ Asegúrate de tener las siguientes herramientas instaladas antes de comenzar:
 
 ## Instrucciones de configuración
 
+Clona este repositorio en tu máquina local:
+```sh
+git clone https://post-manager.git
+```
+
 Sigue estos pasos para configurar y ejecutar el proyecto:
 
 ### Configuración del Proyecto Backend
@@ -34,17 +39,12 @@ rails db:migrate
 ```
 
 ### Configuración del Proyecto FrontEnd
-1. Clona este repositorio en tu máquina local:
-```sh
-git clone https://post-manager.git
-```
-
-2. Navega al directorio del proyecto:
+1. Navega al directorio del proyecto:
 ```sh
 cd frontend
 ```
 
-3. Instala las dependencias del proyecto:
+2. Instala las dependencias del proyecto:
 ```sh
 npm install
 ```
