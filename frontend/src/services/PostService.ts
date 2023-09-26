@@ -13,7 +13,7 @@ export const PostService = () => {
     }
   }
 
-  const createPost = async (name: IPost['name'], description: IPost['description']) => {
+  const createPost = async ({ name, description }: Pick<IPost, 'name' | 'description'>) => {
     try {
       const response = await api.post('/posts', { name, description });
       return response.data;

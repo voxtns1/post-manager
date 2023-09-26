@@ -1,24 +1,24 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { PostService } from '../services';
+import { useFetchPosts } from '../hooks';
 
 export const PostForm = () => {
   const navigation = useNavigate();
+  const { createPost } = useFetchPosts()
 
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
-  const { createPost } = PostService()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if ([name, description].includes("")) {
-      console.error("Todos los datos son obligaorios")
+      console.error("Todos los datos son obligatorios")
       return;
     }
 
     try {
-      await createPost(name, description);
+      createPost({name, description});
       setName('');
       setDescription('');
 

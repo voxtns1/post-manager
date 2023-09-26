@@ -1,41 +1,46 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { PostService } from '../services';
 import { IPost } from '../types';
+import { useFetchPosts } from '../hooks';
 
 export const PostList = () => {
   const navigation = useNavigate();
+  const { data, deletePost } = useFetchPosts();
 
-  const [posts, setPosts] = useState<IPost[]>([]);
+  const [posts, setPosts] = useState<IPost[]>(data)
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [searchTitle, setSearchTitle] = useState('');
   const [searchDescription, setSearchDescription] = useState('');
-  const { getPosts, deletePost } = PostService()
-
-  const fetchPosts = async () => {
-    try {
-      const fetchedPosts = await getPosts(searchTerm);
-      setPosts(fetchedPosts);
-    } catch (error: any) {
-      console.error(error.message);
-    }
-  }
 
   useEffect(() => {
-    fetchPosts();
-  }, []);
+    setPosts(data)
+    setSearchTerm("")
+    setSearchTitle("")
+    setSearchDescription("")
+  }, [data])
+
+  const filterPostsName = (post: IPost, search: string) => post.name.toLowerCase().includes(search.toLowerCase()) || search === ''
+  const filterPostsDescription = (post: IPost, search: string) => post.description.toLowerCase().includes(search.toLowerCase()) || search === ''
 
   const handleDelete = async (post: IPost) => {
     try {
       await deletePost(post.id);
-      const updatedPosts = posts.filter(p => p.id !== post.id);
-      setPosts(updatedPosts);
     } catch (error: any) {
       console.error(error.message);
     }
   }
 
   const handleCreate = () => navigation('/create')
+
+  const handleSearch = () => {
+    const posts = data.filter(post => {
+      const titleMatch = filterPostsName(post, searchTerm);
+      const descriptionMatch = filterPostsDescription(post, searchTerm);
+      return titleMatch || descriptionMatch;
+    });
+
+    setPosts(posts);
+  }
 
   return (
     <div className="container">
@@ -47,7 +52,7 @@ export const PostList = () => {
           value={searchTerm}
           onChange={e => setSearchTerm(e.target.value)}
         />
-        <button onClick={fetchPosts}>Buscar</button>
+        <button onClick={handleSearch}>Buscar</button>
       </div>
       <table>
         <thead>
@@ -60,14 +65,8 @@ export const PostList = () => {
         <tbody>
           {posts
             .filter((post) => {
-              const titleMatch =
-                post.name.toLowerCase().includes(searchTitle.toLowerCase()) ||
-                searchTitle === '';
-              const descriptionMatch =
-                post.description
-                  .toLowerCase()
-                  .includes(searchDescription.toLowerCase()) ||
-                searchDescription === '';
+              const titleMatch = filterPostsName(post, searchTitle);
+              const descriptionMatch = filterPostsDescription(post, searchTitle);
               return titleMatch && descriptionMatch;
             })
             .map((post) => (
