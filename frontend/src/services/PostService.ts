@@ -13,9 +13,9 @@ export const PostService = () => {
     }
   }
 
-  const createPost = async ({ name, description }: Pick<IPost, 'name' | 'description'>) => {
+  const createPost = async (newPost: Pick<IPost, 'name' | 'description'>) => {
     try {
-      const response = await api.post('/posts', { name, description });
+      const response = await api.post('/posts', newPost);
       return response.data;
     } catch (error) {
       throw new Error('Error al crear la publicación');
